@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../css/common.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <!-- search static -->
+    <div id="search">
+        <form>
+            <input type="text" id="SearchText" />
+            <input type="button" id="SearchButton" value="search" />
+        </form>
+    </div>
+    <!-- search end -->
+    <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var $Text = $("#SearchText").val();
+            $("#SearchButton").click(function(){
+                $.ajax({
+                    type:"post",
+                    url:"http://www.facekeke.com",
+                    data:{SearchText:$Text},
+                    success:function(data){
+
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+现在开始安装相关环境
+
+键入命令：npm install express 回车等待安装express........
+
+键入命令：npm install jade 回车等待安装jade........
+
+键入命令：npm install mysql回车等待安装mysql........
+
+默认情况下上述组件都是安装在C:\Program Files\nodejs\node_modules文件夹下
+这也是nodejs相关组件的自动查找路径
+/* -------------------------------------------------------------------------------------- */
+
+
+
+
+1.新建工程 express -t ejs newsproject
+
+2.进入工程 cd newsproject
+
+3.运行npm安装	npm install
+
+4.测试！
+	在newsproject下新建helloworld.js
+var http = require("http");
+http.createServer(function(request, response) {
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.write("Hello World");
+    response.end();
+}).listen(8888);
+console.log("nodejs start listen 8888 port!");
+
+
+5.进入node.js命令窗口 输入
+	D:\Program Files\nodejs\newsproject>node app.js
+
+	D:\Program Files\nodejs\newsproject>node helloworld.js
+nodejs start listen 8888 port!

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        input[type='text']{width:300px;height:30px;border-radius:5px;border:1px solid #999;text-indent:1em;outline:none;}
+        .btn-primary{width:80px;height:30px;background: #3D51FF;border:1px solid #3D51FF;border-radius: 5px;color:#fff;}
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="MainController">
+    <form name="signUpForm" ng-submit="submitForm()">
+        <!--
+            基础指令：
+                ng-model
+                ng-minlength最小长度
+                ng-maxlength最大长度
+         -->
+        <label>用户名：</label>
+        <input
+                type="text" name="username"
+                ng-class="{ 'error':signUpForm.username.$invalid && signUpForm.username.$touched}"
+                required
+                ng-model="username" ng-minlength="3" ng-maxlength="10"
+        />
+        <button type="submit" class="btn-primary" ng-disabled="signUpForm.$invalid">提交</button>
+
+        <div ng-if="signUpForm.username.$invalid && signUpForm.username.$touched">您输入有误请检查</div>
+        <div ng-if="signUpForm.username.$valid">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+        </div>
+        <div>{{ name }}</div>
+    </form>
+    <script type="text/javascript" src="../js/angular.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            angular.module('myApp',[])
+            .controller('MainController',function($scope){
+                $scope.submitForm = function(){
+                    console.log("表单提交！")
+                }
+            })
+        })();
+    </script>
+</body>
+</html>

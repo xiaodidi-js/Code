@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>从时间中拖动时间</h1>
+    <span id="clock"></span><!-- 时间显示在这里 -->
+    <textarea></textarea><!-- 把时间放在这里 -->
+
+    <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            var clock = document.getElementById("clock");
+            function displayTime(){
+                var now = new Date();
+                var hrs = now.getHours() , mins = now.getMinutes(), sec = now.getSeconds();
+                if(mins < 10) mins = "0" + mins;
+                clock.innerHTML = hrs + ":" + mins + ":" + sec;
+                setInterval(displayTime,60000);
+            }
+            displayTime();
+
+            //使时钟能够拖动
+            clock.draggable = true;
+            clock.ondragstart = function(event){
+                this.style.background = "red";
+            };
+        })();
+    </script>
+
+</body>
+</html>
