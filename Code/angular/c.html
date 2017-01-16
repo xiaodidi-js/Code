@@ -11,39 +11,87 @@
 </head>
 <body ng-app="myApp" ng-controller="SignUpController">
     <div class="wrapper">
-        <form name="signUpForm">
+
+        <form name="signUpForm" ng-submit="submitForm()">
             <div class="form-group">
                 <label>用户账号：</label>
-                <input name="username" type="text" class="form-control" ng-model="userdata-username">
-                <p class="error"></p>
+                <input name="username" type="text" required class="form-control"
+                       ng-minlength="4" ng-maxlength="32" ng-model="userdata.username">
+                <p class="error" ng-if="signUpForm.username.$error.required && signUpForm.username.$touched">
+                    用户账号不能为空
+                </p>
+                <p class="error" ng-if="(signUpForm.username.$error.minlength
+                                        || signUpForm.username.$error.maxlength) && signUpForm.username.$touched">
+                    用户账号长度为4至32之间
+                </p>
             </div>
             <div class="form-group">
                 <label>用户密码：</label>
-                <input name="password" type="password" class="form-control" ng-model="userdata-password">
-                <p class="error"></p>
+                <!-- 文本框 -->
+                <input name="password" type="password" required class="form-control"
+                       ng-maxlength="10" ng-minlength="4" ng-model="userdata.password">
+                <!-- 错误提示标签 -->
+                <p class="error" ng-if="signUpForm.password.$error.required && signUpForm.password.$touched">
+                    用户密码不能为空
+                </p>
+                <p class="error" ng-if="(signUpForm.password.$error.minlength
+                                        || signUpForm.password.$error.maxlength)
+                                        && signUpForm.password.$touched">
+                    用户密码长度为4至32之间
+                </p>
             </div>
             <div class="form-group">
-                <label>确认密码：</label>
-                <input name="password2" type="password" class="form-control" ng-model="userdata-password2">
-                <p class="error"></p>
+                <!-- compare：匹配密码输入框的信息 -->
+                <label>用户密码：</label>
+                <input name="password2" type="password"  required class="form-control"
+                       ng-maxlength="10" ng-minlength="4" ng-model="userdata.password2" compare="userdata.password">
+
             </div>
             <div class="form-group">
-                <label></label>
-                <input type="submit" class="form-control">
+                <button class="form-control">注册</button>
             </div>
         </form>
     </div>
-    <script src="../js/angular-1.3.0.js"></script>
+    <script src="../js/angular.min.js"></script>
     <script>
-        (function(){
-            angular.module('myApp',[])
-                .controller('SignUpController',function($scope){
-                    $scope.userdata = {};
-                    $scope.submitForm = function(){
-                        console.log($scope.userdata);
-                    }
-                })
-        })();
+        var mymodule = angular.module('myApp',[]);
+        mymodule.controller('SignUpController',function($scope){
+
+            $scope.userdata = {
+                /*username:'123',
+                password:'123',
+                password2:'123',
+                */
+            };
+
+            $scope.submitForm = function(){
+                console.log($scope.userdata);
+                if($scope.signUpForm.$invalid){
+                    alert('请检查您的信息！');
+                }else{
+                    alert("提交成功！");
+                }
+            }
+        })
+
+        mymodule.directive("compare",function(){
+            var o = {};
+            o.strict  = "AE";
+            o.scope = {
+                orgText:"=compare"
+            };
+            o.require = "ngModel";
+            o.link = function(sco,ele,att,con){
+                con.$validators.compare = function(v){
+                    return v == sco.orgText;
+                }
+                sco.$watch("orgText",function(){
+                    con.$validate();
+                });
+            }
+            return 0;
+        });
+
     </script>
 </body>
 </html>
